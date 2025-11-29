@@ -14,7 +14,9 @@ class TablePage{
     
     javaCourse = () => cy.get('#courses_table [data-col="language"]').contains('Java')
 
-    pythonCourse = () => cy.get('td[data-col="language"]').contains('Python');
+    pythonCourse = () => cy.get('td[data-col="language"]:visible').should('contain.text', 'Python');
+
+    enrollmentsCol = () => cy.get('td[data-col="enrollments"]:visible');
 
     beginnerCourse = () => cy.get('td[data-col="level"]:visible').should('contain.text', 'Beginner');
 
@@ -28,10 +30,13 @@ class TablePage{
         .invoke('text')
         .then(parseInt)
         .should('be.greaterThan', enrollments);
-}
+    }
 
+    noMatchingCourses = () => + cy.get('#noData').should('be.visible');
 
+    resetButton = () => cy.get('#resetFilters');
 
+    sortByDropdown = () => cy.get('#sortBy').select('Enrollments');
 
 }
 
