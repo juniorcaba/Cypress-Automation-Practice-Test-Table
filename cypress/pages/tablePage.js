@@ -12,31 +12,60 @@ class TablePage{
 
     advancedrLeveCheck = () => cy.get('input[type=checkbox][value="Advanced"]');
     
-    javaCourse = () => cy.get('#courses_table [data-col="language"]').contains('Java')
+    javaCourse = () => cy.get('#courses_table [data-col="language"]');
 
-    pythonCourse = () => cy.get('td[data-col="language"]:visible').should('contain.text', 'Python');
+    pythonCourse = () => cy.get('td[data-col="language"]:visible');
+
+    languageColumn = () => cy.get('td[data-col="language"]:visible')
 
     enrollmentsCol = () => cy.get('td[data-col="enrollments"]:visible');
 
-    beginnerCourse = () => cy.get('td[data-col="level"]:visible').should('contain.text', 'Beginner');
+    CourseLevel = () => cy.get('td[data-col="level"]:visible');
 
     minEnrollmentsDropdown = () => cy.get('#enrollDropdown');
 
     minEnrollmentsSelect = () => cy.get('li[data-value="10000"]');
 
-    visibleEnrollments = () => {
-    const enrollments = 10000;
-    cy.get('td[data-col="enrollments"]:visible')
-        .invoke('text')
-        .then(parseInt)
-        .should('be.greaterThan', enrollments);
-    }
+    enrollmentsColumn = () => cy.get('td[data-col="enrollments"]:visible');
 
-    noMatchingCourses = () => + cy.get('#noData').should('be.visible');
+    noMatchingCourses = () => cy.get('#noData');
 
     resetButton = () => cy.get('#resetFilters');
 
     sortByDropdown = () => cy.get('#sortBy').select('Enrollments');
+
+verifyMinEnrollments = (elementValue, minValue) => {
+    return elementValue().each(($var) => {
+        const enrollment = parseInt($var.text());
+        expect(enrollment).to.be.greaterThan(minValue);
+    });
+}
+
+clickOn = (selector) => {
+        return selector()
+            .should('be.visible')
+            .click();
+}
+
+LanguageVisible = (element, language) => {
+    return element()
+        .should('contain.text', language);
+}
+
+LanguageNotVisible = (elementFunction, language) => {
+    return elementFunction()
+        .should('not.contain.text', language); 
+}
+
+visibleCourse = (course, level) => {
+    return course()
+        .should('contain.text', level)
+}
+
+matchingCourses = (course) => {
+    return course()
+        .should('be.visible')
+}
 
 }
 
