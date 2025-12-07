@@ -2,6 +2,23 @@
 "urls": {
 "loginPage": "https://practicetestautomation.com/practice-test-login/",
 "tablePage": "https://practicetestautomation.com/practice-test-table/"
+},
+
+"lenguage":{
+"excludedLanguage": "Python",
+"visibleLanguage": "Java"
+},
+
+"courseLevels":{
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced"
+},
+
+"EnrollmentsValue": {
+    "minEnrollmentsValue": 10000,
+    "maxEnrollmentsValue": 30000
 }
+
 
 }

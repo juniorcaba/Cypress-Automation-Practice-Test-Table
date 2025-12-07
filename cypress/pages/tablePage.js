@@ -4,7 +4,7 @@ class TablePage{
 
     javaLanguage = () => cy.get('input[type=radio][value="Java"]');
 
-    pythonLanguage = () => cy.get('input[type=radio][value="Python"]');
+    pythonLanguage = () => cy.get('input[type=radio][value="Pyhton"]');
 
     beginnerLeveCheck = () => cy.get('input[type=checkbox][value="Beginner"]');
 
@@ -34,17 +34,19 @@ class TablePage{
 
     sortByDropdown = () => cy.get('#sortBy').select('Enrollments');
 
-verifyMinEnrollments = (elementValue, minValue) => {
+verifyMinEnrollments (elementValue, minValue){
     return elementValue().each(($var) => {
         const enrollment = parseInt($var.text());
         expect(enrollment).to.be.greaterThan(minValue);
     });
 }
 
-clickOn = (selector) => {
-        return selector()
-            .should('be.visible')
-            .click();
+clickOn(selector) {
+    selector().click();
+}
+
+getLanguageCell(languageName) {
+    languageName()
 }
 
 LanguageVisible = (element, language) => {
@@ -60,6 +62,11 @@ LanguageNotVisible = (elementFunction, language) => {
 visibleCourse = (course, level) => {
     return course()
         .should('contain.text', level)
+}
+
+visibleElement = (selector) => {
+    return selector()
+        .should('be.visible')
 }
 
 matchingCourses = (course) => {

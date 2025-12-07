@@ -12,19 +12,19 @@ const tablePage = new TablePage();
 
     it('Test case 1: Language filter → Java', () =>{
         tablePage.clickOn(tablePage.javaLanguage);
-        tablePage.LanguageNotVisible(tablePage.languageColumn, 'Python');
+        tablePage.languageColumn().should('not.contain.text', data.lenguage.excludedLanguage);
         });
 
     it('Test case 2: Level filter → Beginner only', () =>{
         tablePage.clickOn(tablePage.intermediateLeveCheck);
         tablePage.clickOn(tablePage.advancedrLeveCheck);
-        tablePage.visibleCourse(tablePage.CourseLevel, 'Beginner');
+        tablePage.CourseLevel().should('contain.text', data.courseLevels.beginner);
     })
 
     it('Test case 3: Min enrollments → 10,000+', () => {
         tablePage.clickOn(tablePage.minEnrollmentsDropdown);
         tablePage.clickOn(tablePage.minEnrollmentsSelect);
-        tablePage.verifyMinEnrollments(tablePage.enrollmentsColumn, 10000);
+        tablePage.verifyMinEnrollments(tablePage.enrollmentsColumn, data.EnrollmentsValue.minEnrollmentsValue);
     })
 
     it('Test case 4: Combined filters → Python + Beginner + 10,000+', () => {
@@ -37,7 +37,7 @@ const tablePage = new TablePage();
         tablePage.verifyMinEnrollments(tablePage.enrollmentsColumn, 10000);
     })
 
-    it.only('Test case 5: No results state', () => {
+    it('Test case 5: No results state', () => {
         tablePage.clickOn(tablePage.anyLanguage);
         tablePage.clickOn(tablePage.beginnerLeveCheck);
         tablePage.clickOn(tablePage.intermediateLeveCheck);
@@ -47,10 +47,10 @@ const tablePage = new TablePage();
     })
 
     it('Test case 6: Reset button visibility and behavior', () => {
-        tablePage.anyLanguage().click();
-        tablePage.beginnerLeveCheck().click();
-        tablePage.resetButton().should('be.visible');
-        tablePage.resetButton().click();
+        tablePage.clickOn(tablePage.anyLanguage);
+        tablePage.clickOn(tablePage.beginnerLeveCheck);
+        tablePage.visibleElement(tablePage.resetButton);
+        tablePage.clickOn(tablePage.resetButton);
     })
 
     it('Test case 7: Sort by Enrollments (ascending, numeric)', () => {
