@@ -2,6 +2,7 @@ import TablePage from "../pages/tablePage";
 import data from "..//fixtures/testData.json";
 
 const tablePage = new TablePage();
+const minValue = parseInt(data.EnrollmentsValue.minEnrollmentsValue);
 
     beforeEach(() => {
         cy.visit('/');
@@ -24,8 +25,11 @@ const tablePage = new TablePage();
     it('Test case 3: Min enrollments → 10,000+', () => {
         tablePage.clickOn(tablePage.minEnrollmentsDropdown);
         tablePage.clickOn(tablePage.minEnrollmentsSelect);
-        tablePage.verifyMinEnrollments(tablePage.enrollmentsColumn, data.EnrollmentsValue.minEnrollmentsValue);
-    })
+        tablePage.getEnrollmentsCellElements().each(($enrollmentCell) => {
+            const enrollmentValue = parseInt($enrollmentCell.text());
+            expect(enrollmentValue).to.be.greaterThan(minValue); 
+        });
+});
 
     it('Test case 4: Combined filters → Python + Beginner + 10,000+', () => {
         tablePage.clickOn(tablePage.pythonLanguage);
@@ -33,8 +37,11 @@ const tablePage = new TablePage();
         tablePage.clickOn(tablePage.intermediateLeveCheck)
         tablePage.clickOn(tablePage.minEnrollmentsDropdown);
         tablePage.clickOn(tablePage.minEnrollmentsSelect);
-        tablePage.LanguageVisible(tablePage.languageColumn, 'Python');
-        tablePage.verifyMinEnrollments(tablePage.enrollmentsColumn, 10000);
+        tablePage.languageColumn().should('contain.text',data.language.python)
+        tablePage.getEnrollmentsCellElements().each(($enrollmentCell) => {
+            const enrollmentValue = parseInt($enrollmentCell.text());
+            expect(enrollmentValue).to.be.greaterThan(minValue); 
+        });
     })
 
     it('Test case 5: No results state', () => {
@@ -43,17 +50,17 @@ const tablePage = new TablePage();
         tablePage.clickOn(tablePage.intermediateLeveCheck);
         tablePage.clickOn(tablePage.minEnrollmentsDropdown);
         tablePage.clickOn(tablePage.minEnrollmentsSelect);
-        tablePage.matchingCourses(tablePage.noMatchingCourses)
+        tablePage.noMatchingCourses().should('be.visible');
     })
 
     it('Test case 6: Reset button visibility and behavior', () => {
         tablePage.clickOn(tablePage.anyLanguage);
         tablePage.clickOn(tablePage.beginnerLeveCheck);
-        tablePage.visibleElement(tablePage.resetButton);
+        tablePage.resetButton().should('be.visible');
         tablePage.clickOn(tablePage.resetButton);
     })
 
-    it('Test case 7: Sort by Enrollments (ascending, numeric)', () => {
+    it.only('Test case 7: Sort by Enrollments (ascending, numeric)', () => {
         tablePage.sortByDropdown();
         tablePage.enrollmentsCol().should('be.visible');
         

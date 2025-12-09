@@ -4,9 +4,10 @@
 "tablePage": "https://practicetestautomation.com/practice-test-table/"
 },
 
-"lenguage":{
+"language":{
 "excludedLanguage": "Python",
-"visibleLanguage": "Java"
+"visibleLanguage": "Java",
+"python": "Python"
 },
 
 "courseLevels":{
